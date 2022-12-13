@@ -1,0 +1,53 @@
+print('--------- \n|       | \n|       | \n|       | \n---------')
+
+symbols = ['  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ']
+symbol = 'X '
+a = []
+def winner():
+    if first_row == 'X X X ' or second_row == 'X X X ' or third_row == 'X X X ':
+        winner = 'X'
+        return winner
+    elif first_row == 'O O O ' or second_row == 'O O O ' or third_row == 'O O O ':
+        winner = 'O'
+        return winner
+    elif symbols[0:9:4] == ['X ','X ','X '] or symbols[0:9:4] == ['O ','O ','O ']:
+        winner = symbols[0]
+        return winner
+    elif symbols[2:7:2] == ['X ','X ','X '] or symbols[2:7:2] == ['O ','O ','O ']:
+        winner = symbols[2]
+        return winner
+
+    
+    
+while True:
+    row, column = input().split()
+    coordinate = ((int(row) - 1) * 3 + (int(column) + 2)) - 3 
+    
+    try:
+        if row.isnumeric() and column.isnumeric():
+            True
+    except TypeError:
+        print('You should enter numbers!')
+    
+    if int(row) not in [1, 2, 3] or int(column) not in [1, 2, 3]:
+        print('Coordinates should be from 1 to 3!')
+            
+    elif symbols[coordinate] != '  ':
+        print('This cell is occupied! Choose another one!')
+    
+    else: 
+        symbols[coordinate] = symbol
+        a.append(coordinate)
+        first_row = ''.join(symbols[0:3])
+        second_row = ''.join(symbols[3:6])
+        third_row = ''.join(symbols[6:9])
+        print('--------- \n| '+ first_row + '| \n| ' + second_row + '| \n| ' + third_row + '| \n---------')
+        symbol = 'O ' if symbol == 'X ' else 'X '
+        winner()
+        if winner() in ['X ', 'O ']: 
+            print(winner() + 'wins!')
+            break
+        elif winner() not in ['X ', 'O '] and len(a) == 9:
+            print('Draw')
+            break
+    
